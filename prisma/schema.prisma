@@ -32,6 +32,6 @@ model Tracker {
   nextAppointment String
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
-  userId    Int   @unique      
+  userId    Int        
   user      User    @relation(fields: [userId], references: [id])
 }
