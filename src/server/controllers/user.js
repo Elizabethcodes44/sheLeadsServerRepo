@@ -9,10 +9,13 @@ dotenv.config();
 // Use process.env to access JWT secret
 const jwtSecret = process.env.JWT_SECRET;
 
+const createToken = (payload) => {
+  return jwt.sign(payload, jwtSecret);
+};
+
 const signUp = async (req, res) => {
   try {
     const { firstName, lastName, email, password } = req.body;
-    console.log("this is the body:",req.body)
     const hashedPassword = await bcrypt.hash(password, 12);
     const createdUser = await prisma.user.create({
       data: {
@@ -22,7 +25,6 @@ const signUp = async (req, res) => {
         password: hashedPassword,
       },
     });
-    console.log("this is the created user:", createdUser);
     res.status(201).json({ data: createdUser });
   } catch (error) {
     console.error("Error during registration:", error.message);
@@ -49,16 +51,8 @@ const logIn = async (req, res) => {
     return res.status(401).json({ error: "Invalid email or password." });
   } else {
     const payload = { email: email, sub: foundUser.id };
-
-    const createToken = (payload, jwtSecret) => {
-      const token = jwt.sign(payload, jwtSecret);
-      return token;
-    };
-
-    const token = createToken(payload, jwtSecret);
+    const token = createToken(payload);
     res.json({ data: token });
-
-    console.log(token);
   }
 };
 
