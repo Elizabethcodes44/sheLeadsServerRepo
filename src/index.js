@@ -38,7 +38,7 @@ app.get('*', (req, res) => {
 });
 
 
-const port = process.env.VITE_PORT;
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`\n Server is running on http://localhost:${port}\n`);
 });
