@@ -7,7 +7,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 // Use process.env to access JWT secret
-const jwtSecret = process.env.JWT_SECRET;
+const secret = process.env.secret;
 
 const signUp = async (req, res) => {
   try {
@@ -50,12 +50,12 @@ const logIn = async (req, res) => {
   } else {
     const payload = { email: email, sub: foundUser.id };
 
-    const createToken = (payload, jwtSecret) => {
-      const token = jwt.sign(payload, jwtSecret);
+    const createToken = (payload, secret) => {
+      const token = jwt.sign(payload, secret);
       return token;
     };
 
-    const token = createToken(payload, jwtSecret);
+    const token = createToken(payload, secret);
     res.json({ data: token });
 
     console.log(token);
