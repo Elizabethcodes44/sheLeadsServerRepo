@@ -14,7 +14,8 @@ const getAllTrackers = async (req, res) => {
 };
 
 const createTracker = async (req, res) => {
-  const { userId,weight, bloodPressure, fetalMovements, feelings, lastAppointment, nextAppointment } = req.body;
+  const { weight, bloodPressure, fetalMovements, feelings, lastAppointment, nextAppointment } = req.body;
+  const userId = req.session.userId
 
   try { console.log("this isthe body:",req.body)
     const createdTracker = await prisma.tracker.create({
@@ -25,14 +26,11 @@ const createTracker = async (req, res) => {
         feelings,
         lastAppointment,
         nextAppointment,
-        user: {
-          connect: { id: userId }
-        }
+        userId,
       },
      
     });
-    console.log("this is the :",lastAppointment)
-    console.log("after: this is created data:", createdTracker)
+   
     return res.json({ data: createdTracker });
 
   } catch (error) {
