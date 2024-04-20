@@ -12,7 +12,7 @@ const secret = process.env.secret;
 const signUp = async (req, res) => {
   try {
     const { firstName, lastName, email, password } = req.body;
-    console.log("this is the body:",req.body)
+   // console.log("this is the body:",req.body)
     const hashedPassword = await bcrypt.hash(password, 12);
     const createdUser = await prisma.user.create({
       data: {
@@ -22,7 +22,7 @@ const signUp = async (req, res) => {
         password: hashedPassword,
       },
     });
-    console.log("this is the created user:", createdUser);
+   // console.log("this is the created user:", createdUser);
     res.status(201).json({ data: createdUser });
   } catch (error) {
     console.error("Error during registration:", error.message);
@@ -58,7 +58,7 @@ const logIn = async (req, res) => {
     const token = createToken(payload, secret);
     res.json({ data: token });
 
-    console.log(token);
+    //console.log(token);
   }
 };
 

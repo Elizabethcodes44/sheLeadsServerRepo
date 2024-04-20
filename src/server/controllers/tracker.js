@@ -16,7 +16,7 @@ const getAllTrackers = async (req, res) => {
 const createTracker = async (req, res) => {
   const { userId,weight, bloodPressure, fetalMovements, feelings, lastAppointment, nextAppointment } = req.body;
 
-  try { console.log("this isthe body:",req.body)
+  try { 
     const createdTracker = await prisma.tracker.create({
       data: {
         weight,
@@ -31,12 +31,12 @@ const createTracker = async (req, res) => {
       },
      
     });
-    console.log("this is the :",lastAppointment)
-    console.log("after: this is created data:", createdTracker)
+    //console.log("this is the :",lastAppointment)
+    //console.log("after: this is created data:", createdTracker)
     return res.json({ data: createdTracker });
 
   } catch (error) {
-    console.log(error.message)
+    //console.log(error.message)
     return res.status(500).json({ error: error.message || "Internal Server Error" });
   }
 };
