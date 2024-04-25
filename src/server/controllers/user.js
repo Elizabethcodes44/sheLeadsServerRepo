@@ -32,7 +32,9 @@ const signUp = async (req, res) => {
 
 const logIn = async (req, res) => {
   const { email, password } = req.body;
-
+ if(!email || !password) {
+  return res.status(401).json({error: "field missing"})
+ }
   const foundUser = await prisma.user.findUnique({
     where: {
       email: email,
