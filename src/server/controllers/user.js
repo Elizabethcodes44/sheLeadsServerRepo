@@ -50,7 +50,7 @@ const logIn = async (req, res) => {
   if (!passwordsMatch) {
     return res.status(401).json({ error: "Invalid email or password." });
   } else {
-    const payload = { email: email, sub: foundUser.id };
+    const payload = { sub: foundUser.id };
 
     const createToken = (payload, secret) => {
       const token = jwt.sign(payload, secret);
@@ -58,7 +58,7 @@ const logIn = async (req, res) => {
     };
 
     const token = createToken(payload, secret);
-    res.json({ data: token });
+    res.json({ data: token , id: foundUser.id});
 
     //console.log(token);
   }
